@@ -404,6 +404,7 @@ let Calendar = React.createClass({
 
 var styles = StyleSheet.create({
   calendarContainer: {
+    width: DEVICE_WIDTH,
     backgroundColor: '#f7f7f7',
   },
   monthContainer: {
