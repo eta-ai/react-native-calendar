@@ -1,7 +1,7 @@
 'use strict';
 
 let React = require('react-native');
-let PropTypes = require('ReactPropTypes');
+let PropTypes = React.PropTypes;
 let moment = require('moment');
 let _ = require('lodash');
 
