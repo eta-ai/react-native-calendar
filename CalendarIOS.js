@@ -21,6 +21,11 @@ let
   DEVICE_WIDTH = Dimensions.get('window').width,
   VIEW_INDEX = 2;
 
+function getMonthKey(date) {
+  const dd = new Date(date)
+  return '' + dd.getFullYear() + dd.getMonth()
+}
+
 let Day = React.createClass({
 
   propTypes: {
@@ -151,7 +156,7 @@ let Calendar = React.createClass({
   },
 
   componentWillMount() {
-    this.renderedMonths = [];
+    this.renderedMonths = {};
   },
 
   componentDidMount() {
@@ -265,7 +270,7 @@ let Calendar = React.createClass({
 
     renderedMonthView = <View key={moment(newDay).month()} style={styles.monthContainer}>{weekRows}</View>;
     // keep this rendered month view in case it can be reused without generating it again
-    this.renderedMonths.push([date, renderedMonthView])
+    this.renderedMonths[getMonthKey(date)] = renderedMonthView;
     return renderedMonthView;
   },
 
@@ -364,11 +369,7 @@ let Calendar = React.createClass({
     if (moment(this.state.currentMonth).isSame(date, 'month')) {
       renderedMonth = this.renderMonthView(date);
     } else {
-      for (var i = 0; i < this.renderedMonths.length; i++) {
-        if (moment(this.renderedMonths[i][0]).isSame(date, 'month')) {
-          renderedMonth = this.renderedMonths[i][1];
-        }
-      }
+      renderedMonth = this.renderedMonths[getMonthKey(date)]
       if (!renderedMonth) { renderedMonth = this.renderMonthView(date); }
     }
     return renderedMonth;
